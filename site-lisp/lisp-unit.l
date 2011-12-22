@@ -536,7 +536,9 @@ For more information, see lisp-unit.html.
 
 
 #+xyzzy
-(setf (get 'assert-eq 'ed:lisp-indent-hook) 2
+(setf (get 'define-test 'ed:lisp-indent-hook) 1
+      (get 'with-test-listener 'ed:lisp-indent-hook) 1
+      (get 'assert-eq 'ed:lisp-indent-hook) 2
       (get 'assert-eql 'ed:lisp-indent-hook) 2
       (get 'assert-equal 'ed:lisp-indent-hook) 2
       (get 'assert-equalp 'ed:lisp-indent-hook) 2

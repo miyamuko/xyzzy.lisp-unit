@@ -333,8 +333,7 @@ For more information, see lisp-unit.html.
 (defun remove-all-tests (&optional (package *package*))
   (if (null package)
       (clrhash *tests*)
-    (remhash (find-package package) *tests*)))
-
+    (remhash (get-package-key package) *tests*)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Private functions
@@ -344,11 +343,15 @@ For more information, see lisp-unit.html.
 ;;; DEFINE-TEST support
 
 (defun get-package-table (package &key create)
-  (let ((table (gethash (find-package package) *tests*)))
+  (let ((table (gethash (get-package-key package) *tests*)))
     (or table
         (and create
-             (setf (gethash package *tests*)
+             (setf (gethash (get-package-key package) *tests*)
                    (make-hash-table))))))
+
+(defun get-package-key (package)
+  (let ((package (find-package package)))
+    (intern (package-name package) :keyword)))
 
 (defun get-test-name (form)
   (if (atom form) form (cadr form)))
